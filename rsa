@@ -1,18 +1,35 @@
 #!/usr/bin/python3
-from sys import argv
-
-with open(argv[1]) as f:
-    for line in f:
+import sys
+"""
+a function that writes a string to a text file (UTF8)
+and returns the number of characters written
+"""
+def main():
+    list_num = []
+    filepath = sys.argv[1]
+    with open(filepath, "r", encoding="UTF_8") as fp:
+        line = fp.readline()
         num = int(line)
-        print("{:d}=".format(num), end="")
-        if num % 2 == 0:
-            print("{}*2".format(num//2))
-            continue
-        for i in range(3, num, 2):
-            if num % i == 0:
-                factor = num//i
-                for j in range(3, factor, 2):
-                    if factor % j == 0 or i % j == 0:
-                        break
-                print("{}*{}".format(factor, i))
-                break
+        list_num = rsa_number(num)
+        print("{:d}={:d}*{:d}".format(num, list_num[0], list_num[1]))
+        list_num.clear()
+def rsa_number(n):
+    i = 2
+    lst = []
+    while(True):
+        if ((n % i) == 0):
+            if (prime_number(n // i) and prime_number(i)):
+                lst.append(n // i)
+                lst.append(i)
+                return lst
+        i += 1
+def prime_number(num):
+    # prime numbers are greater than 1
+    if num > 1:
+    # check for factors
+        for j in range(2, num):
+            if (num % j) != 0:
+                return (True)
+        return (False)
+if __name__ == '__main__':
+    main()
